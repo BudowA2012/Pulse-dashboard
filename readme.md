@@ -1,7 +1,5 @@
 # ⚡ Pulse - Smart Dashboard
 
-![Pulse System](./assets/system.png)
-
 Pulse is a futuristic personal smart dashboard created from scratch.
 
 The goal of this project is to build a customizable all-in-one workspace that combines system monitoring, weather information, notes and future productivity tools in one modern interface.

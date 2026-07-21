@@ -1,69 +1,87 @@
 import type { WeatherData } from "../types/weather";
 
 export class WeatherCard {
+  private id: string;
+
+  constructor(id: string) {
+    this.id = id;
+  }
+
   render(): string {
     return `
 
-<div class="weather-card">
+<div class="weather-card" id="${this.id}">
 
-    <h2 id="weather-city">
-        Wybierz miasto
-    </h2>
 
-    <div
-        class="weather-temp"
-        id="weather-temp"
-    >
-        --°C
-    </div>
+<div class="weather-add">
 
-    <div
-        class="weather-details"
-    >
 
-        <div>
-            🌡 Odczuwalna:
-            <span id="weather-feels">
-                --
-            </span>
-        </div>
+<input
+class="card-city-input"
+placeholder="🔍 Wpisz miasto..."
+/>
 
-        <div>
-            💧 Wilgotność:
-            <span id="weather-humidity">
-                --
-            </span>
-        </div>
 
-        <div>
-            💨 Wiatr:
-            <span id="weather-wind">
-                --
-            </span>
-        </div>
+<div class="card-city-results">
+</div>
 
-    </div>
+
+</div>
+
+
+<div class="weather-content" style="display:none">
+
+
+<h2 class="weather-city">
+</h2>
+
+
+<div class="weather-temp">
+</div>
+
+
+<div class="weather-details">
+</div>
+
+
+</div>
+
 
 </div>
 
 `;
   }
 
-  update(data: WeatherData) {
-    document.getElementById("weather-city")!.textContent = data.city;
+  showWeather(data: WeatherData) {
+    const card = document.getElementById(this.id);
 
-    document.getElementById("weather-temp")!.textContent =
+    if (!card) return;
+
+    const add = card.querySelector(".weather-add") as HTMLElement;
+
+    const content = card.querySelector(".weather-content") as HTMLElement;
+
+    add.style.display = "none";
+
+    content.style.display = "block";
+
+    card.querySelector(".weather-city")!.textContent = data.city;
+
+    card.querySelector(".weather-temp")!.textContent =
       `${Math.round(data.temperature)}°C`;
 
-    document.getElementById("weather-feels")!.textContent =
-      `${Math.round(data.apparentTemperature)}°C`;
+    card.querySelector(".weather-details")!.innerHTML = `
 
-    document.getElementById("weather-humidity")!.textContent =
-      `${data.humidity}%`;
+    💧 ${data.humidity}%
 
-    document.getElementById("weather-wind")!.textContent =
-      `${Math.round(data.windSpeed)} km/h`;
+    <br>
+
+    💨 ${Math.round(data.windSpeed)} km/h
+
+    `;
+  }
+
+  getId() {
+    return this.id;
   }
 }
-
-export const weatherCard = new WeatherCard();

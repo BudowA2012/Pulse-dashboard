@@ -1,12 +1,16 @@
 import { Widget } from "./widget";
 
+import { addWeatherCard } from "../components/add-weather-card";
+
+import { WeatherCard } from "../components/weather-card";
+
 import { searchCity } from "../services/geocoding";
 
 import { getWeather } from "../services/weather";
 
-import { weatherCard } from "../components/weather-card";
-
 class WeatherWidget extends Widget {
+  private cards: WeatherCard[] = [];
+
   constructor() {
     super("weather", "🌤 Pogoda");
   }
@@ -14,35 +18,25 @@ class WeatherWidget extends Widget {
   render(): string {
     return `
 
-<div class="widget weather-widget">
+<div class="weather-widget">
 
 
-    <h2>
-        ${this.title}
-    </h2>
-
-
-    <div class="city-search">
-
-
-        <input
-            id="city-input"
-            placeholder="🔍 Wpisz miasto..."
-        >
-
-
-        <div
-            id="city-results"
-            class="city-results"
-        ></div>
-
-
-    </div>
+<h2>
+${this.title}
+</h2>
 
 
 
-    ${weatherCard.render()}
+<div 
+class="weather-grid"
+id="weather-grid"
+>
 
+
+${addWeatherCard.render()}
+
+
+</div>
 
 
 </div>
@@ -51,9 +45,59 @@ class WeatherWidget extends Widget {
   }
 
   setup() {
-    const input = document.getElementById("city-input") as HTMLInputElement;
+    this.bindAddButton();
+  }
 
-    const results = document.getElementById("city-results");
+  private bindAddButton() {
+    document
+      .querySelector(".add-weather-card")
+      ?.addEventListener("click", () => {
+        this.addWeatherWidget();
+      });
+  }
+
+  private addWeatherWidget() {
+    const grid = document.getElementById("weather-grid");
+
+    if (!grid) return;
+
+    const id = "weather-" + Date.now();
+
+    const card = new WeatherCard(id);
+
+    this.cards.push(card);
+
+    this.renderCards();
+  }
+
+  private renderCards() {
+    const grid = document.getElementById("weather-grid");
+
+    if (!grid) return;
+
+    grid.innerHTML = "";
+
+    this.cards.forEach((card) => {
+      grid.insertAdjacentHTML("beforeend", card.render());
+    });
+
+    grid.insertAdjacentHTML("beforeend", addWeatherCard.render());
+
+    this.bindAddButton();
+
+    this.cards.forEach((card) => {
+      this.setupSearch(card);
+    });
+  }
+
+  private setupSearch(card: WeatherCard) {
+    const element = document.getElementById(card.getId());
+
+    if (!element) return;
+
+    const input = element.querySelector(".card-city-input") as HTMLInputElement;
+
+    const results = element.querySelector(".card-city-results") as HTMLElement;
 
     if (!input || !results) return;
 
@@ -68,36 +112,38 @@ class WeatherWidget extends Widget {
 
       const cities = await searchCity(value);
 
+      if (!cities || cities.length === 0) {
+        results.innerHTML = "";
+
+        return;
+      }
+
       results.innerHTML = cities
         .map(
           (city, index) => `
 
-            <div
-                class="city-option"
-                data-index="${index}"
-            >
+<div
+class="city-option"
+data-index="${index}"
+>
 
-                ${city.name}
+${city.name}
 
-            </div>
+</div>
 
-            `,
+`,
         )
         .join("");
 
-      document.querySelectorAll(".city-option").forEach((element) => {
-        element.addEventListener("click", async () => {
-          const index = Number(element.getAttribute("data-index"));
+      results.querySelectorAll(".city-option").forEach((option) => {
+        option.addEventListener("click", async () => {
+          const index = Number(option.getAttribute("data-index"));
 
           const city = cities[index];
 
-          const weather = await getWeather(city.name, city.lat, city.lon);
+          const data = await getWeather(city.name, city.lat, city.lon);
 
-          weatherCard.update(weather);
-
-          input.value = city.name;
-
-          results.innerHTML = "";
+          card.showWeather(data);
         });
       });
     });

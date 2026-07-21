@@ -1,93 +1,101 @@
-# ⚡ Pulse
+# ⚡ Pulse - Smart Dashboard
 
-<div align="center">
+![Pulse Logo](./assets/pulse-logo.png)
 
-<img src="https://img.shields.io/badge/Pulse-Smart%20Dashboard-7aa7ff?style=for-the-badge">
+Pulse is a futuristic personal smart dashboard built from scratch.
 
-<br>
+The goal of Pulse is to create a customizable all-in-one application that combines system monitoring, weather, notes, calendar and personal tools in one beautiful interface.
 
-**A modern desktop system monitoring dashboard built with Tauri, Rust and TypeScript.**
+The project focuses on:
 
-</div>
+- modern UI design
+- modular architecture
+- local data storage
+- customizable widgets
+- future expandability
 
-## ✨ About
+---
 
-Pulse is a modern and lightweight desktop dashboard designed to bring important information into one clean interface.
+# ✨ Features
 
-The goal of Pulse is to create a beautiful, customizable control center for your computer — combining system monitoring, live data and useful widgets in one application.
+## ✅ Completed
 
-## 🚀 Features
+### 🖥 System Dashboard
 
-### 🖥 System Monitoring
-
-- CPU usage monitoring
-- GPU usage monitoring
-- RAM usage monitoring
+- CPU monitoring
+- GPU monitoring
+- RAM monitoring
 - Real-time updates
-- Interactive charts
+- Modular widget system
 
 ### 🌤 Weather
 
-- Live weather information
-- Location-based weather support _(coming soon)_
-- Clean weather widget
+- Weather widget
+- City search
+- Multiple saved cities
+- Local storage saving
+- Weather cards
+- Temperature display
+- Wind information
+- Humidity information
+- Weather icons based on weather conditions
 
-### 🎨 Modern Interface
+### 📝 Notes
 
-- Glassmorphism design
-- Smooth animations
-- Responsive widget layout
-- Custom dashboard architecture
+- Notes widget
+- Create notes
+- Delete notes
+- Local saving
+- Individual note cards
+- Custom note editor
+- Glass-style UI
 
-## 🛠 Built With
+---
 
-### Frontend
+# 🚧 Currently working on
 
-- TypeScript
-- Vite
-- HTML / CSS
+## 📅 Calendar
 
-### Backend
+Planned features:
 
-- Rust
-- Tauri
+- Monthly calendar view
+- Adding events
+- Removing events
+- Event storage
+- Reminders
+- Colors/categories
+- Integration with notes
 
-### Other Technologies
+---
 
-- Open-Meteo API
-- NVML GPU monitoring
-- Sysinfo
+# 🚀 Future Goals
 
-## 📸 Preview
+## Customization
 
-Coming soon...
+- Custom widget positions
+- Drag & drop widgets
+- Themes
+- More dashboard layouts
 
-## 📌 Roadmap
+## Storage 2.0
 
-- [x] CPU monitoring
-- [x] GPU monitoring
-- [x] RAM monitoring
-- [x] Dashboard widgets
-- [x] Weather widget
-- [ ] Custom widget system
-- [ ] Temperature monitoring
-- [ ] Network monitoring
-- [ ] Disk monitoring
-- [ ] User themes
-- [ ] Plugin system
+- Better local database structure
+- User preferences
+- Layout saving
+- Settings system
 
-## 💡 Philosophy
+## More Widgets
 
-Pulse is built around one idea:
+Planned:
 
-> Your computer should have a beautiful control center, not just a task manager.
+- Calendar
+- To-do list
+- Music player
+- System performance graphs
+- Network monitor
+- Battery monitor
+- Smart launcher
 
-## 📦 Installation
+---
 
-Currently Pulse is in active development.
-
-Clone the repository:
-
-```bash
-git clone https://github.com/BudowA2012/Pulse.git
-```
+# 🏗 Project Structure

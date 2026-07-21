@@ -1,17 +1,25 @@
-export async function searchCity(city: string) {
+import type { CityResult } from "../types/weather";
+
+export async function searchCity(query: string): Promise<CityResult[]> {
+  if (query.trim().length < 2) {
+    return [];
+  }
+
   const response = await fetch(
-    `https://nominatim.openstreetmap.org/search?q=${city}&format=json&limit=1`,
+    `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=8&language=pl&format=json`,
   );
 
   const data = await response.json();
 
-  if (data.length === 0) return null;
+  if (!data.results) {
+    return [];
+  }
 
-  return {
-    name: data[0].display_name,
+  return data.results.map((city: any) => ({
+    name: `${city.name}${city.country ? ", " + city.country : ""}`,
 
-    lat: Number(data[0].lat),
+    lat: city.latitude,
 
-    lon: Number(data[0].lon),
-  };
+    lon: city.longitude,
+  }));
 }

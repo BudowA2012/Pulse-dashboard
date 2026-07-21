@@ -3,24 +3,19 @@ export interface WeatherData {
 
   temperature: number;
 
-  feelsLike: number;
+  apparentTemperature: number;
 
   humidity: number;
 
-  wind: number;
+  windSpeed: number;
 
   weatherCode: number;
+}
 
-  hourly: {
-    time: string;
-    temp: number;
-    code: number;
-  }[];
+export interface CityResult {
+  name: string;
 
-  daily: {
-    date: string;
-    max: number;
-    min: number;
-    code: number;
-  }[];
+  lat: number;
+
+  lon: number;
 }

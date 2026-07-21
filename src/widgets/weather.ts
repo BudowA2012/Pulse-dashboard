@@ -1,6 +1,12 @@
 import { Widget } from "./widget";
 
-export class WeatherWidget extends Widget {
+import { searchCity } from "../services/geocoding";
+
+import { getWeather } from "../services/weather";
+
+import { weatherCard } from "../components/weather-card";
+
+class WeatherWidget extends Widget {
   constructor() {
     super("weather", "🌤 Pogoda");
   }
@@ -8,78 +14,93 @@ export class WeatherWidget extends Widget {
   render(): string {
     return `
 
-
-        <div class="widget weather-widget">
-
-
-            <h2>
-
-                ${this.title}
-
-            </h2>
+<div class="widget weather-widget">
 
 
-
-            <h3>
-
-                📍 Jelenia Góra
-
-            </h3>
+    <h2>
+        ${this.title}
+    </h2>
 
 
+    <div class="city-search">
 
-            <div 
-            class="value"
-            id="weather-temperature"
-            >
 
-                Ładowanie...
+        <input
+            id="city-input"
+            placeholder="🔍 Wpisz miasto..."
+        >
 
-            </div>
+
+        <div
+            id="city-results"
+            class="city-results"
+        ></div>
+
+
+    </div>
 
 
 
-            <div
-            id="weather-status"
-            >
-
-            </div>
+    ${weatherCard.render()}
 
 
 
-        </div>
+</div>
 
-
-        `;
-  }
-
-  update() {
-    const temperature = document.getElementById("weather-temperature");
-
-    const status = document.getElementById("weather-status");
-
-    if (!temperature) return;
-
-    fetch(
-      "https://api.open-meteo.com/v1/forecast?latitude=50.8997&longitude=15.7289&current=temperature_2m,weather_code",
-    )
-      .then((response) => response.json())
-
-      .then((data) => {
-        temperature.textContent = `${data.current.temperature_2m} °C`;
-
-        if (status) {
-          status.textContent = "Aktualna pogoda";
-        }
-      })
-
-      .catch(() => {
-        temperature.textContent = "Błąd pogody";
-      });
+`;
   }
 
   setup() {
-    this.update();
+    const input = document.getElementById("city-input") as HTMLInputElement;
+
+    const results = document.getElementById("city-results");
+
+    if (!input || !results) return;
+
+    input.addEventListener("input", async () => {
+      const value = input.value.trim();
+
+      if (value.length < 2) {
+        results.innerHTML = "";
+
+        return;
+      }
+
+      const cities = await searchCity(value);
+
+      results.innerHTML = cities
+        .map(
+          (city, index) => `
+
+            <div
+                class="city-option"
+                data-index="${index}"
+            >
+
+                ${city.name}
+
+            </div>
+
+            `,
+        )
+        .join("");
+
+      document.querySelectorAll(".city-option").forEach((element) => {
+        element.addEventListener("click", async () => {
+          const index = Number(element.getAttribute("data-index"));
+
+          const city = cities[index];
+
+          const weather = await getWeather(city.name, city.lat, city.lon);
+
+          weatherCard.update(weather);
+
+          input.value = city.name;
+
+          results.innerHTML = "";
+        });
+      });
+    });
   }
 }
 

@@ -463,3 +463,53 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.weather-card {
+  position: relative;
+}
+
+.weather-remove {
+  position: absolute;
+
+  top: 15px;
+
+  right: 15px;
+
+  width: 32px;
+
+  height: 32px;
+
+  border-radius: 50%;
+
+  border: none;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  color: white;
+
+  font-size: 22px;
+
+  cursor: pointer;
+
+  transition: 0.25s;
+}
+
+.weather-remove:hover {
+  background: rgba(255, 70, 70, 0.4);
+
+  transform: scale(1.1);
+}
+
+.weather-details div {
+  font-size: 16px;
+
+  color: rgba(255, 255, 255, 0.75);
+
+  margin-top: 8px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}

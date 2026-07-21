@@ -1,12 +1,12 @@
 import { Widget } from "./widget";
 
 import { addWeatherCard } from "../components/add-weather-card";
-
 import { WeatherCard } from "../components/weather-card";
 
 import { searchCity } from "../services/geocoding";
-
 import { getWeather } from "../services/weather";
+
+import { loadWeatherCities, addWeatherCity } from "../storage";
 
 class WeatherWidget extends Widget {
   private cards: WeatherCard[] = [];
@@ -27,7 +27,7 @@ ${this.title}
 
 
 
-<div 
+<div
 class="weather-grid"
 id="weather-grid"
 >
@@ -44,8 +44,10 @@ ${addWeatherCard.render()}
 `;
   }
 
-  setup() {
+  async setup() {
     this.bindAddButton();
+
+    await this.loadSavedCities();
   }
 
   private bindAddButton() {
@@ -57,10 +59,6 @@ ${addWeatherCard.render()}
   }
 
   private addWeatherWidget() {
-    const grid = document.getElementById("weather-grid");
-
-    if (!grid) return;
-
     const id = "weather-" + Date.now();
 
     const card = new WeatherCard(id);
@@ -79,15 +77,27 @@ ${addWeatherCard.render()}
 
     this.cards.forEach((card) => {
       grid.insertAdjacentHTML("beforeend", card.render());
+
+      const element = document.getElementById(card.getId());
+
+      element
+        ?.querySelector(".weather-remove")
+        ?.addEventListener("click", () => {
+          this.removeCard(card);
+        });
+
+      this.setupSearch(card);
     });
 
     grid.insertAdjacentHTML("beforeend", addWeatherCard.render());
 
     this.bindAddButton();
+  }
 
-    this.cards.forEach((card) => {
-      this.setupSearch(card);
-    });
+  private removeCard(card: WeatherCard) {
+    this.cards = this.cards.filter((item) => item !== card);
+
+    this.renderCards();
   }
 
   private setupSearch(card: WeatherCard) {
@@ -144,9 +154,43 @@ ${city.name}
           const data = await getWeather(city.name, city.lat, city.lon);
 
           card.showWeather(data);
+
+          addWeatherCity({
+            name: city.name,
+
+            lat: city.lat,
+
+            lon: city.lon,
+          });
         });
       });
     });
+  }
+
+  private async loadSavedCities() {
+    const cities = loadWeatherCities();
+
+    if (cities.length === 0) return;
+
+    for (const _city of cities) {
+      const id = "weather-" + Date.now() + Math.random();
+
+      const card = new WeatherCard(id);
+
+      this.cards.push(card);
+    }
+
+    this.renderCards();
+
+    for (let i = 0; i < cities.length; i++) {
+      const data = await getWeather(
+        cities[i].name,
+        cities[i].lat,
+        cities[i].lon,
+      );
+
+      this.cards[i].showWeather(data);
+    }
   }
 }
 

@@ -1,3 +1,7 @@
+// =======================
+// TYPES
+// =======================
+
 export interface WeatherCity {
   id: string;
 
@@ -12,15 +16,35 @@ export interface WeatherCity {
   createdAt: string;
 }
 
+export interface Note {
+  id: string;
+
+  title: string;
+
+  content: string;
+
+  createdAt: string;
+
+  updatedAt: string;
+}
+
+// =======================
+// STORAGE
+// =======================
+
 const STORAGE_KEY = "pulse-storage";
 
 export interface PulseStorage {
   weatherCities: WeatherCity[];
+
+  notes: Note[];
 }
 
 function getDefaultStorage(): PulseStorage {
   return {
     weatherCities: [],
+
+    notes: [],
   };
 }
 
@@ -32,7 +56,13 @@ export function loadStorage(): PulseStorage {
   }
 
   try {
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+
+    return {
+      weatherCities: parsed.weatherCities ?? [],
+
+      notes: parsed.notes ?? [],
+    };
   } catch {
     return getDefaultStorage();
   }
@@ -85,8 +115,6 @@ export function removeWeatherCity(id: string) {
     (city) => city.id !== id,
   );
 
-  // poprawienie kolejności
-
   storage.weatherCities = storage.weatherCities.map((city, index) => ({
     ...city,
 
@@ -95,9 +123,6 @@ export function removeWeatherCity(id: string) {
 
   saveStorage(storage);
 }
-// =======================
-// COMPATIBILITY
-// =======================
 
 export function loadWeatherCities() {
   const storage = loadStorage();
@@ -109,4 +134,36 @@ export function loadWeatherCities() {
 
     lon: city.lon,
   }));
+}
+
+// =======================
+// NOTES
+// =======================
+
+export function addNote(note: Note) {
+  const storage = loadStorage();
+
+  storage.notes.push(note);
+
+  saveStorage(storage);
+}
+
+export function removeNote(id: string) {
+  const storage = loadStorage();
+
+  storage.notes = storage.notes.filter((note) => note.id !== id);
+
+  saveStorage(storage);
+}
+
+export function updateNote(updatedNote: Note) {
+  const storage = loadStorage();
+
+  const index = storage.notes.findIndex((note) => note.id === updatedNote.id);
+
+  if (index === -1) return;
+
+  storage.notes[index] = updatedNote;
+
+  saveStorage(storage);
 }

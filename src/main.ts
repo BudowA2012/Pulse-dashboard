@@ -3,7 +3,9 @@ import "./style.css";
 import { cpuWidget } from "./widgets/cpu";
 import { gpuWidget } from "./widgets/gpu";
 import { ramWidget } from "./widgets/ram";
+
 import { weatherWidget } from "./widgets/weather";
+import { notesWidget } from "./widgets/notes";
 
 const app = document.querySelector<HTMLDivElement>("#app");
 
@@ -12,7 +14,6 @@ if (app) {
 
 
 <div class="app">
-
 
 
 <header class="header">
@@ -28,7 +29,6 @@ PULSE
 </div>
 
 
-
 <div class="brand-sub">
 
 SMART DASHBOARD
@@ -37,7 +37,6 @@ SMART DASHBOARD
 
 
 </div>
-
 
 
 
@@ -61,12 +60,19 @@ Pogoda
 
 
 
+<button id="notes-tab">
+
+Notatki
+
+</button>
+
+
+
 </nav>
 
 
 
 </header>
-
 
 
 
@@ -142,6 +148,29 @@ ${weatherWidget.render()}
     weatherWidget.setup();
   }
 
+  function showNotes() {
+    if (!content) return;
+
+    content.innerHTML = `
+
+
+<div class="weather-page">
+
+
+${notesWidget.render()}
+
+
+</div>
+
+
+`;
+
+    notesWidget.setup();
+    {
+      notesWidget.render();
+    }
+  }
+
   document.getElementById("system-tab")?.addEventListener("click", () => {
     showSystem();
 
@@ -152,6 +181,12 @@ ${weatherWidget.render()}
     showWeather();
 
     setActiveTab("weather-tab");
+  });
+
+  document.getElementById("notes-tab")?.addEventListener("click", () => {
+    showNotes();
+
+    setActiveTab("notes-tab");
   });
 
   showSystem();

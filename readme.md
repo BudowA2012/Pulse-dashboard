@@ -1,220 +1,93 @@
-# ⚡ Pulse - Smart Dashboard
+# ⚡ Pulse
 
-![Pulse System](./assets/system.png)
+<div align="center">
 
-Pulse is a futuristic personal smart dashboard created from scratch.
+<img src="https://img.shields.io/badge/Pulse-Smart%20Dashboard-7aa7ff?style=for-the-badge">
 
-The goal of this project is to build a customizable all-in-one workspace that combines system monitoring, weather information, notes and future productivity tools in one modern interface.
+<br>
 
-Pulse focuses on:
+**A modern desktop system monitoring dashboard built with Tauri, Rust and TypeScript.**
 
-- modular widget architecture
-- modern futuristic UI
-- local data storage
-- expandable features
-- customizable user experience
+</div>
 
----
+## ✨ About
 
-# ✨ Features
+Pulse is a modern and lightweight desktop dashboard designed to bring important information into one clean interface.
 
-## ✅ Completed
+The goal of Pulse is to create a beautiful, customizable control center for your computer — combining system monitoring, live data and useful widgets in one application.
 
-# 🖥 System Dashboard
+## 🚀 Features
 
-![System Dashboard](./assets/system.png)
+### 🖥 System Monitoring
 
-Features:
-
-- CPU monitoring
-- GPU monitoring
-- RAM monitoring
+- CPU usage monitoring
+- GPU usage monitoring
+- RAM usage monitoring
 - Real-time updates
-- Separate system widgets
-- Clean dashboard layout
+- Interactive charts
 
----
+### 🌤 Weather
 
-# 🌤 Weather Widget
+- Live weather information
+- Location-based weather support _(coming soon)_
+- Clean weather widget
 
-![Weather Widget](./assets/pogoda.png)
+### 🎨 Modern Interface
 
-Features:
+- Glassmorphism design
+- Smooth animations
+- Responsive widget layout
+- Custom dashboard architecture
 
-- Weather search
-- City selection
-- Multiple saved locations
-- Automatic loading after restart
-- Local storage
-- Weather cards
-- Temperature information
-- Wind speed
-- Humidity
-- Weather icons based on conditions
+## 🛠 Built With
 
----
-
-# 📝 Notes Widget
-
-![Notes Widget](./assets/notatki.png)
-
-Features:
-
-- Creating notes
-- Removing notes
-- Local saving
-- Individual note cards
-- Note preview
-- Full note editor
-- Modern glass-style interface
-
----
-
-# 🚧 Currently Developing
-
-# 📅 Calendar Widget
-
-Planned features:
-
-- Monthly calendar view
-- Adding events
-- Removing events
-- Saving events locally
-- Event colors
-- Reminders
-- Connection with notes
-
----
-
-# 🚀 Future Roadmap
-
-## Customization
-
-Future plans:
-
-- Drag & drop widgets
-- Custom dashboard layouts
-- Themes
-- More UI personalization
-
-## Storage 2.0
-
-Improvements:
-
-- Better local database structure
-- Saving widget positions
-- User settings
-- Layout saving
-- Application preferences
-
-## More Widgets
-
-Planned:
-
-- Calendar
-- To-do list
-- Music player
-- Network monitor
-- Performance graphs
-- Battery monitor
-- Smart launcher
-
----
-
-# 🏗 Project Structure
-
-```
-Pulse
-│
-├── assets
-│   ├── system.png
-│   ├── pogoda.png
-│   └── notatki.png
-│
-├── src
-│   │
-│   ├── components
-│   │   ├── weather-card
-│   │   ├── note-card
-│   │   └── UI components
-│   │
-│   ├── services
-│   │   ├── weather
-│   │   ├── weather-storage
-│   │   └── note-storage
-│   │
-│   ├── widgets
-│   │   ├── weather
-│   │   ├── notes
-│   │   ├── cpu
-│   │   ├── gpu
-│   │   └── ram
-│   │
-│   ├── storage.ts
-│   ├── main.ts
-│   └── style.css
-│
-└── README.md
-```
-
----
-
-# 🎨 Design
-
-Pulse uses a futuristic glassmorphism design inspired by modern operating systems.
-
-Design elements:
-
-- dark interface
-- blue/purple gradients
-- transparent cards
-- blur effects
-- smooth animations
-- modular widgets
-
----
-
-# 📸 Screenshots
-
-## System Dashboard
-
-![System](./assets/system.png)
-
-## Weather
-
-![Weather](./assets/pogoda.png)
-
-## Notes
-
-![Notes](./assets/notatki.png)
-
----
-
-# 🎯 Project Vision
-
-The goal of Pulse is to create a personal smart workspace where everything important is available in one beautiful and customizable application.
-
-The idea:
-
-> "One dashboard. Everything you need."
-
-Pulse is not only a dashboard — it is a continuously expanding personal workspace.
-
----
-
-# 🛠 Technologies
+### Frontend
 
 - TypeScript
 - Vite
+- HTML / CSS
+
+### Backend
+
+- Rust
 - Tauri
-- HTML
-- CSS
-- LocalStorage
 
----
+### Other Technologies
 
-# 👨‍💻 Author
+- Open-Meteo API
+- NVML GPU monitoring
+- Sysinfo
 
-Created by Leon
+## 📸 Preview
 
-Personal programming project focused on learning, experimentation and building a real-world application.
+Coming soon...
+
+## 📌 Roadmap
+
+- [x] CPU monitoring
+- [x] GPU monitoring
+- [x] RAM monitoring
+- [x] Dashboard widgets
+- [x] Weather widget
+- [ ] Custom widget system
+- [ ] Temperature monitoring
+- [ ] Network monitoring
+- [ ] Disk monitoring
+- [ ] User themes
+- [ ] Plugin system
+
+## 💡 Philosophy
+
+Pulse is built around one idea:
+
+> Your computer should have a beautiful control center, not just a task manager.
+
+## 📦 Installation
+
+Currently Pulse is in active development.
+
+Clone the repository:
+
+```bash
+git clone https://github.com/BudowA2012/Pulse.git
+```

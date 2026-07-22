@@ -28,6 +28,20 @@ export interface Note {
   updatedAt: string;
 }
 
+export interface CalendarEvent {
+  id: string;
+
+  title: string;
+
+  description: string;
+
+  date: string;
+
+  time: string;
+
+  createdAt: string;
+}
+
 // =======================
 // STORAGE
 // =======================
@@ -38,6 +52,8 @@ export interface PulseStorage {
   weatherCities: WeatherCity[];
 
   notes: Note[];
+
+  calendarEvents: CalendarEvent[];
 }
 
 function getDefaultStorage(): PulseStorage {
@@ -45,6 +61,8 @@ function getDefaultStorage(): PulseStorage {
     weatherCities: [],
 
     notes: [],
+
+    calendarEvents: [],
   };
 }
 
@@ -62,6 +80,8 @@ export function loadStorage(): PulseStorage {
       weatherCities: parsed.weatherCities ?? [],
 
       notes: parsed.notes ?? [],
+
+      calendarEvents: parsed.calendarEvents ?? [],
     };
   } catch {
     return getDefaultStorage();

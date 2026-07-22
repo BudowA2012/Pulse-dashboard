@@ -6,6 +6,7 @@ import { ramWidget } from "./widgets/ram";
 
 import { weatherWidget } from "./widgets/weather";
 import { notesWidget } from "./widgets/notes";
+import { calendarWidget } from "./widgets/calendar";
 
 const app = document.querySelector<HTMLDivElement>("#app");
 
@@ -14,6 +15,7 @@ if (app) {
 
 
 <div class="app">
+
 
 
 <header class="header">
@@ -29,6 +31,7 @@ PULSE
 </div>
 
 
+
 <div class="brand-sub">
 
 SMART DASHBOARD
@@ -37,6 +40,7 @@ SMART DASHBOARD
 
 
 </div>
+
 
 
 
@@ -68,8 +72,15 @@ Notatki
 
 
 
-</nav>
+<button id="calendar-tab">
 
+Kalendarz
+
+</button>
+
+
+
+</nav>
 
 
 </header>
@@ -77,9 +88,11 @@ Notatki
 
 
 
+
 <main id="content">
 
 </main>
+
 
 
 
@@ -154,7 +167,7 @@ ${weatherWidget.render()}
     content.innerHTML = `
 
 
-<div class="weather-page">
+<div class="notes-page">
 
 
 ${notesWidget.render()}
@@ -166,9 +179,26 @@ ${notesWidget.render()}
 `;
 
     notesWidget.setup();
-    {
-      notesWidget.render();
-    }
+  }
+
+  function showCalendar() {
+    if (!content) return;
+
+    content.innerHTML = `
+
+
+<div class="calendar-page">
+
+
+${calendarWidget.render()}
+
+
+</div>
+
+
+`;
+
+    calendarWidget.setup();
   }
 
   document.getElementById("system-tab")?.addEventListener("click", () => {
@@ -187,6 +217,12 @@ ${notesWidget.render()}
     showNotes();
 
     setActiveTab("notes-tab");
+  });
+
+  document.getElementById("calendar-tab")?.addEventListener("click", () => {
+    showCalendar();
+
+    setActiveTab("calendar-tab");
   });
 
   showSystem();

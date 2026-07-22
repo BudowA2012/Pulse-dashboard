@@ -9,6 +9,8 @@ import { openCalendarEditor } from "../components/calendar-editor";
 
 import type { CalendarEvent } from "../storage";
 
+import { removeCalendarEvent } from "../services/calendar-storage";
+
 class CalendarWidget {
   private currentDate: Date;
 
@@ -16,6 +18,22 @@ class CalendarWidget {
 
   constructor() {
     this.currentDate = new Date();
+  }
+
+  private bindDeleteButtons() {
+    document.querySelectorAll(".calendar-delete-event").forEach((button) => {
+      button.addEventListener("click", () => {
+        const id = button.getAttribute("data-id");
+
+        if (!id) return;
+
+        removeCalendarEvent(id);
+
+        this.events = loadCalendarEvents();
+
+        this.renderCalendar();
+      });
+    });
   }
 
   render() {
@@ -110,6 +128,7 @@ id="calendar-grid">
     this.renderCalendar();
 
     this.bindMonthButtons();
+    this.bindDeleteButtons();
   }
 
   private bindMonthButtons() {
@@ -173,6 +192,7 @@ id="calendar-grid">
     }
 
     this.bindDayButtons();
+    this.bindDeleteButtons();
   }
 
   private bindDayButtons() {

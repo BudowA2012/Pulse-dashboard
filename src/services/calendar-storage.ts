@@ -3,7 +3,9 @@ import { loadStorage, saveStorage } from "../storage";
 import type { CalendarEvent } from "../storage";
 
 export function loadCalendarEvents() {
-  return loadStorage().calendarEvents;
+  const storage = loadStorage();
+
+  return storage.calendarEvents;
 }
 
 export function saveCalendarEvents(events: CalendarEvent[]) {

@@ -10,10 +10,7 @@ export class CalendarDayCard {
     return `
 
 
-<div 
-class="calendar-day-card"
-data-day="${this.day}"
->
+<div class="calendar-day-card">
 
 
 <div class="calendar-day-header">
@@ -30,7 +27,9 @@ ${this.day}
 <button 
 class="calendar-add-event"
 data-day="${this.day}">
+
 +
+
 </button>
 
 
@@ -43,19 +42,56 @@ data-day="${this.day}">
 <div class="calendar-events">
 
 
+
 ${this.events
   .map(
     (event) => `
 
-<div class="calendar-mini-event">
+<div 
+class="calendar-mini-event"
+data-event-id="${event.id}">
+
+
+<div class="calendar-event-info">
+
+
+<div class="calendar-event-title">
 
 ${event.title}
 
 </div>
 
+
+
+<div class="calendar-event-time">
+
+${event.time}
+
+</div>
+
+
+</div>
+
+
+
+
+<button 
+class="calendar-delete-event"
+data-id="${event.id}">
+
+×
+
+</button>
+
+
+
+</div>
+
+
 `,
   )
   .join("")}
+
 
 
 </div>

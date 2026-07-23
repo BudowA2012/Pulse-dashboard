@@ -7,6 +7,7 @@ import { ramWidget } from "./widgets/ram";
 import { weatherWidget } from "./widgets/weather";
 import { notesWidget } from "./widgets/notes";
 import { calendarWidget } from "./widgets/calendar";
+import { startReminderService } from "./services/reminder-service";
 
 const app = document.querySelector<HTMLDivElement>("#app");
 
@@ -226,6 +227,7 @@ ${calendarWidget.render()}
   });
 
   showSystem();
+  startReminderService();
 
   setInterval(() => {
     if (document.getElementById("cpu-value")) {
@@ -237,3 +239,5 @@ ${calendarWidget.render()}
     }
   }, 2000);
 }
+
+startReminderService();

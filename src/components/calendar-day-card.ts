@@ -3,24 +3,33 @@ import type { CalendarEvent } from "../storage";
 export class CalendarDayCard {
   constructor(
     private day: number,
+
     private events: CalendarEvent[],
+
+    private isToday: boolean = false,
   ) {}
 
   render() {
     return `
 
 
-<div class="calendar-day-card">
+
+<div class="calendar-day-card ${this.isToday ? "today" : ""}">
+
 
 
 <div class="calendar-day-header">
 
 
+
 <div class="calendar-day-number">
+
 
 ${this.day}
 
+
 </div>
+
 
 
 
@@ -33,7 +42,9 @@ data-day="${this.day}">
 </button>
 
 
+
 </div>
+
 
 
 
@@ -43,7 +54,10 @@ data-day="${this.day}">
 
 
 
+
+
 ${this.events
+
   .map(
     (event) => `
 
@@ -52,7 +66,9 @@ class="calendar-mini-event"
 data-event-id="${event.id}">
 
 
+
 <div class="calendar-event-info">
+
 
 
 <div class="calendar-event-title">
@@ -70,7 +86,9 @@ ${event.time}
 </div>
 
 
+
 </div>
+
 
 
 
@@ -85,20 +103,27 @@ data-id="${event.id}">
 
 
 
+
 </div>
 
 
 `,
   )
+
   .join("")}
 
 
 
-</div>
 
 
 
 </div>
+
+
+
+
+</div>
+
 
 
 `;

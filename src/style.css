@@ -1396,3 +1396,70 @@ body {
 
   background: #ff4d6d;
 }
+
+.calendar-editor select {
+  width: 100%;
+
+  padding: 14px;
+
+  margin-bottom: 15px;
+
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  color: white;
+
+  font-size: 15px;
+
+  outline: none;
+}
+
+.calendar-day.today {
+  border: 1px solid rgba(120, 170, 255, 0.8);
+  background: linear-gradient(
+    145deg,
+    rgba(80, 130, 255, 0.25),
+    rgba(140, 80, 255, 0.18)
+  );
+
+  box-shadow: 0 0 20px rgba(90, 140, 255, 0.35);
+}
+
+.calendar-day.today::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #7aa7ff;
+
+  box-shadow: 0 0 12px #7aa7ff;
+}
+
+.calendar-day-card.today {
+  border: 1px solid rgba(122, 167, 255, 0.9);
+
+  background: linear-gradient(
+    145deg,
+    rgba(122, 167, 255, 0.18),
+    rgba(150, 80, 255, 0.15)
+  );
+
+  box-shadow: 0 0 25px rgba(122, 167, 255, 0.35);
+}
+
+.calendar-day-card.today .calendar-day-number {
+  color: #7aa7ff;
+
+  font-weight: 800;
+
+  text-shadow: 0 0 10px rgba(122, 167, 255, 0.8);
+}

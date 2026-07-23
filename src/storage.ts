@@ -39,6 +39,12 @@ export interface CalendarEvent {
 
   time: string;
 
+  reminder: number;
+
+  notified: boolean;
+
+  lastReminder: string | null;
+
   createdAt: string;
 }
 

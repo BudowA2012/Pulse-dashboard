@@ -45,6 +45,84 @@ id="event-time"
 type="time"
 />
 
+<label class="event-label">
+Przypomnienie
+</label>
+
+
+<select id="event-reminder">
+
+<option value="0">
+Brak
+</option>
+
+<option value="5">
+5 minut wcześniej
+</option>
+
+<option value="10" selected>
+10 minut wcześniej
+</option>
+
+<option value="15">
+15 minut wcześniej
+</option>
+
+<option value="30">
+30 minut wcześniej
+</option>
+
+<option value="60">
+60 minut wcześniej
+</option>
+
+</select>
+
+<label>
+
+Przypomnienie
+
+</label>
+
+<select id="event-reminder">
+
+<option value="0">
+
+Brak
+
+</option>
+
+<option value="5">
+
+5 minut wcześniej
+
+</option>
+
+<option value="10" selected>
+
+10 minut wcześniej
+
+</option>
+
+<option value="15">
+
+15 minut wcześniej
+
+</option>
+
+<option value="30">
+
+30 minut wcześniej
+
+</option>
+
+<option value="60">
+
+1 godzina wcześniej
+
+</option>
+
+</select>
 
 
 <textarea
@@ -80,6 +158,10 @@ Zapisz
     const time = (document.getElementById("event-time") as HTMLInputElement)
       .value;
 
+    const reminder = Number(
+      (document.getElementById("event-reminder") as HTMLSelectElement).value,
+    );
+
     const description = (
       document.getElementById("event-description") as HTMLTextAreaElement
     ).value;
@@ -96,6 +178,10 @@ Zapisz
       time,
 
       createdAt: new Date().toISOString(),
+      reminder,
+
+      notified: false,
+      lastReminder: null,
     };
 
     onSave(event);

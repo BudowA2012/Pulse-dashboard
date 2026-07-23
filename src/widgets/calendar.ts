@@ -3,13 +3,12 @@ import { CalendarDayCard } from "../components/calendar-day-card";
 import {
   loadCalendarEvents,
   saveCalendarEvents,
+  removeCalendarEvent,
 } from "../services/calendar-storage";
 
 import { openCalendarEditor } from "../components/calendar-editor";
 
 import type { CalendarEvent } from "../storage";
-
-import { removeCalendarEvent } from "../services/calendar-storage";
 
 class CalendarWidget {
   private currentDate: Date;
@@ -43,38 +42,26 @@ class CalendarWidget {
 <div class="calendar-widget">
 
 
-
 <div class="calendar-top">
 
 
-
 <button id="calendar-prev">
-
 ←
-
 </button>
-
 
 
 
 <h2 id="calendar-title">
-
 </h2>
 
 
 
-
 <button id="calendar-next">
-
 →
-
 </button>
 
 
-
 </div>
-
-
 
 
 
@@ -104,15 +91,11 @@ class CalendarWidget {
 
 
 
-
-
 <div 
 class="calendar-grid"
 id="calendar-grid">
 
 </div>
-
-
 
 
 
@@ -128,6 +111,7 @@ id="calendar-grid">
     this.renderCalendar();
 
     this.bindMonthButtons();
+
     this.bindDeleteButtons();
   }
 
@@ -186,13 +170,42 @@ id="calendar-grid">
 
       const dayEvents = this.events.filter((event) => event.date === date);
 
-      const card = new CalendarDayCard(day, dayEvents);
+      const today = new Date();
+
+      const isToday =
+        today.getFullYear() === year &&
+        today.getMonth() === month &&
+        today.getDate() === day;
+
+      const card = new CalendarDayCard(day, dayEvents, isToday);
 
       grid.innerHTML += card.render();
     }
 
+    this.markToday();
+
     this.bindDayButtons();
+
     this.bindDeleteButtons();
+  }
+
+  private markToday() {
+    const today = new Date();
+
+    if (
+      today.getFullYear() !== this.currentDate.getFullYear() ||
+      today.getMonth() !== this.currentDate.getMonth()
+    ) {
+      return;
+    }
+
+    document.querySelectorAll(".calendar-day").forEach((element) => {
+      const day = Number(element.querySelector(".day-number")?.textContent);
+
+      if (day === today.getDate()) {
+        element.classList.add("today");
+      }
+    });
   }
 
   private bindDayButtons() {

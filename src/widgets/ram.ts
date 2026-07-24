@@ -1,6 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { Widget } from "./widget";
 import { Chart } from "../services/charts";
+import { showRamDetails } from "../views/ram-details";
 
 class RamWidget extends Widget {
   private chart: Chart;
@@ -11,34 +12,54 @@ class RamWidget extends Widget {
     this.chart = new Chart("ram-chart");
   }
 
-  render(): string {
+  render() {
     return `
 
-        <div class="widget">
 
-            <h2>
-            ${this.title}
-            </h2>
-
-
-            <div
-            class="value"
-            id="ram-value"
-            >
-            --
-            </div>
+<div
+class="widget system-clickable"
+id="ram-widget"
+>
 
 
-            <div
-            class="chart"
-            id="ram-chart"
-            >
-            </div>
+<h2>
+
+${this.title}
+
+</h2>
 
 
-        </div>
 
-        `;
+<div
+class="value"
+id="ram-value"
+>
+
+--
+
+</div>
+
+
+
+<div
+class="chart"
+id="ram-chart"
+>
+
+</div>
+
+
+
+</div>
+
+
+`;
+  }
+
+  setup() {
+    document.getElementById("ram-widget")?.addEventListener("click", () => {
+      showRamDetails();
+    });
   }
 
   async update() {

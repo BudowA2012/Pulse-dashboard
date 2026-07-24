@@ -1,6 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { Widget } from "./widget";
 import { Chart } from "../services/charts";
+import { showGpuDetails } from "../views/gpu-details";
 
 class GpuWidget extends Widget {
   private chart: Chart;
@@ -11,34 +12,54 @@ class GpuWidget extends Widget {
     this.chart = new Chart("gpu-chart");
   }
 
-  render(): string {
+  render() {
     return `
 
-        <div class="widget">
 
-            <h2>
-            ${this.title}
-            </h2>
-
-
-            <div
-            class="value"
-            id="gpu-value"
-            >
-            --
-            </div>
+<div 
+class="widget system-clickable"
+id="gpu-widget"
+>
 
 
-            <div
-            class="chart"
-            id="gpu-chart"
-            >
-            </div>
+<h2>
+
+${this.title}
+
+</h2>
 
 
-        </div>
 
-        `;
+<div
+class="value"
+id="gpu-value"
+>
+
+--
+
+</div>
+
+
+
+<div
+class="chart"
+id="gpu-chart"
+>
+
+</div>
+
+
+
+</div>
+
+
+`;
+  }
+
+  setup() {
+    document.getElementById("gpu-widget")?.addEventListener("click", () => {
+      showGpuDetails();
+    });
   }
 
   async update() {

@@ -1,6 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { Widget } from "./widget";
 import { Chart } from "../services/charts";
+import { showCpuDetails } from "../views/cpu-details";
 
 class CpuWidget extends Widget {
   private chart: Chart;
@@ -14,31 +15,51 @@ class CpuWidget extends Widget {
   render(): string {
     return `
 
-        <div class="widget">
 
-            <h2>
-            ${this.title}
-            </h2>
-
-
-            <div
-            class="value"
-            id="cpu-value"
-            >
-            --
-            </div>
+<div 
+class="widget system-clickable"
+id="cpu-widget"
+>
 
 
-            <div
-            class="chart"
-            id="cpu-chart"
-            >
-            </div>
+<h2>
+
+${this.title}
+
+</h2>
 
 
-        </div>
 
-        `;
+<div
+class="value"
+id="cpu-value"
+>
+
+--
+
+</div>
+
+
+
+<div
+class="chart"
+id="cpu-chart"
+>
+
+</div>
+
+
+
+</div>
+
+
+`;
+  }
+
+  setup() {
+    document.getElementById("cpu-widget")?.addEventListener("click", () => {
+      showCpuDetails();
+    });
   }
 
   async update() {

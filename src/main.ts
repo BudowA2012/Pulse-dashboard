@@ -8,12 +8,16 @@ import "./styles/notes.css";
 import "./styles/calendar.css";
 import "./styles/animations.css";
 
-//System imports:
+// System imports:
 import { cpuWidget } from "./widgets/cpu";
 import { gpuWidget } from "./widgets/gpu";
 import { ramWidget } from "./widgets/ram";
 import { diskWidget } from "./widgets/disk";
-//other imports:
+
+// Views
+import { showCpuDetails } from "./views/cpu-details";
+
+// Other imports:
 import { weatherWidget } from "./widgets/weather";
 import { notesWidget } from "./widgets/notes";
 import { calendarWidget } from "./widgets/calendar";
@@ -26,7 +30,6 @@ if (app) {
 
 
 <div class="app">
-
 
 
 <header class="header">
@@ -51,7 +54,6 @@ SMART DASHBOARD
 
 
 </div>
-
 
 
 
@@ -99,11 +101,9 @@ Kalendarz
 
 
 
-
 <main id="content">
 
 </main>
-
 
 
 
@@ -122,10 +122,17 @@ Kalendarz
     document.getElementById(id)?.classList.add("active");
   }
 
+  function bindSystemClicks() {
+    document.getElementById("cpu-widget")?.addEventListener("click", () => {
+      showCpuDetails();
+    });
+  }
+
   function showSystem() {
     if (!content) return;
 
     content.innerHTML = `
+
 
 <div class="system-dashboard">
 
@@ -144,6 +151,7 @@ ${diskWidget.render()}
 
 </div>
 
+
 `;
 
     cpuWidget.update();
@@ -153,6 +161,8 @@ ${diskWidget.render()}
     ramWidget.update();
 
     diskWidget.update();
+
+    bindSystemClicks();
   }
 
   function showWeather() {
@@ -240,6 +250,7 @@ ${calendarWidget.render()}
   });
 
   showSystem();
+
   startReminderService();
 
   setInterval(() => {

@@ -2,67 +2,68 @@ import { invoke } from "@tauri-apps/api/core";
 
 interface DiskInfo {
   name: string;
-
   mount: string;
-
   total_space: number;
 }
 
 export const diskWidget = {
+  disks: [] as DiskInfo[],
+
   render() {
-    return `
-
-      <div id="disk-container">
-
-      </div>
-
-    `;
+    return "";
   },
 
   async update() {
     const disks = await invoke<DiskInfo[]>("get_disks");
 
-    const container = document.getElementById("disk-container");
+    const dashboard = document.querySelector(".system-dashboard");
 
-    if (!container) return;
+    if (!dashboard) return;
 
-    container.innerHTML = disks
-      .map(
-        (disk) => `
+    // usuń stare dyski przy odświeżaniu
+    document.querySelectorAll(".disk-widget").forEach((el) => {
+      el.remove();
+    });
+
+    dashboard.insertAdjacentHTML(
+      "beforeend",
+
+      disks
+        .map(
+          (disk) => `
+
+        <div class="widget disk-widget">
 
 
-      <div class="widget disk-widget">
+          <div class="widget-title">
+
+            💽 ${disk.mount}
+
+          </div>
 
 
-        <div class="widget-title">
 
-          💽 ${disk.mount}
+          <div class="disk-name">
+
+            ${disk.name || "Unknown disk"}
+
+          </div>
+
+
+
+          <div class="disk-size">
+
+            ${this.formatSize(disk.total_space)}
+
+          </div>
+
 
         </div>
 
-
-
-        <div class="disk-name">
-
-          ${disk.name || "Unknown disk"}
-
-        </div>
-
-
-
-        <div class="disk-size">
-
-          ${this.formatSize(disk.total_space)}
-
-        </div>
-
-
-      </div>
-
-
-    `,
-      )
-      .join("");
+      `,
+        )
+        .join(""),
+    );
   },
 
   formatSize(bytes: number) {

@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+
+  font-family:
+    Inter,
+    Segoe UI,
+    Arial,
+    sans-serif;
+
+  background: radial-gradient(circle at top, #202b45, #080b12 65%);
+
+  color: white;
+
+  min-height: 100vh;
+}

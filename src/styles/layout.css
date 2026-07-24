@@ -1,0 +1,153 @@
+.app {
+  min-height: 100vh;
+}
+
+/* HEADER */
+
+.header {
+  height: 80px;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 0 40px;
+
+  background: rgba(15, 20, 35, 0.65);
+
+  backdrop-filter: blur(25px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 10;
+}
+
+/* BRAND */
+
+.brand {
+  position: absolute;
+
+  left: 40px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  line-height: 1;
+}
+
+.brand-name {
+  font-size: 28px;
+
+  font-weight: 900;
+
+  letter-spacing: 5px;
+
+  background: linear-gradient(90deg, white, #7aa7ff, #b58cff);
+
+  -webkit-background-clip: text;
+
+  background-clip: text;
+
+  color: transparent;
+
+  text-shadow: 0 0 25px rgba(120, 160, 255, 0.35);
+}
+
+.brand-sub {
+  margin-top: 8px;
+
+  font-size: 10px;
+
+  letter-spacing: 3px;
+
+  text-transform: uppercase;
+
+  color: #8994aa;
+}
+
+/* NAV */
+
+.top-nav {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 50px;
+
+  width: 100%;
+}
+
+.top-nav button {
+  position: relative;
+
+  background: none;
+
+  border: none;
+
+  outline: none;
+
+  color: #8994aa;
+
+  font-size: 18px;
+
+  font-weight: 500;
+
+  cursor: pointer;
+
+  padding: 12px 5px;
+
+  transition: 0.25s ease;
+}
+
+.top-nav button:hover {
+  color: white;
+
+  transform: translateY(-2px);
+}
+
+.top-nav button.active {
+  color: white;
+}
+
+.top-nav button.active::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: -12px;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 3px;
+
+  background: linear-gradient(90deg, white, #7aa7ff);
+
+  border-radius: 10px;
+}
+
+/* PAGE CONTAINERS */
+
+.dashboard {
+  padding: 45px;
+
+  display: grid;
+
+  gap: 30px;
+}
+
+.weather-page {
+  padding: 45px;
+}
+
+.notes-page {
+  padding: 45px;
+}

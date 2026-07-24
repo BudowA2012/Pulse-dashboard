@@ -1,0 +1,97 @@
+.weather-widget {
+  width: 100%;
+}
+
+.weather-widget h2 {
+  font-size: 30px;
+
+  margin-bottom: 30px;
+}
+
+.weather-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+
+  gap: 25px;
+}
+
+.weather-card {
+  min-height: 180px;
+
+  padding: 25px;
+
+  border-radius: 24px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.14),
+    rgba(255, 255, 255, 0.05)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  backdrop-filter: blur(20px);
+
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+
+  transition: 0.3s;
+}
+
+.weather-card:hover {
+  transform: translateY(-7px);
+}
+
+.weather-city {
+  font-size: 22px;
+
+  margin-bottom: 20px;
+}
+
+.weather-temp {
+  font-size: 55px;
+
+  font-weight: 900;
+
+  background: linear-gradient(90deg, white, #8ab4ff);
+
+  -webkit-background-clip: text;
+
+  background-clip: text;
+
+  color: transparent;
+}
+
+.weather-details {
+  margin-top: 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.weather-remove {
+  position: absolute;
+
+  top: 15px;
+
+  right: 15px;
+
+  width: 32px;
+
+  height: 32px;
+
+  border-radius: 50%;
+
+  border: none;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  color: white;
+
+  cursor: pointer;
+}

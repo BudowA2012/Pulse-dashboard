@@ -1,0 +1,47 @@
+.widget {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.14),
+    rgba(255, 255, 255, 0.05)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  border-radius: 28px;
+
+  padding: 28px;
+
+  backdrop-filter: blur(20px);
+
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+
+  transition: 0.3s ease;
+}
+
+.widget:hover {
+  transform: translateY(-8px);
+
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.5);
+}
+
+.widget h2 {
+  margin: 0;
+
+  font-size: 22px;
+
+  color: #dbe7ff;
+}
+
+.value {
+  font-size: 46px;
+
+  font-weight: 800;
+
+  margin-top: 35px;
+
+  letter-spacing: -2px;
+}
+
+button {
+  font-family: inherit;
+}

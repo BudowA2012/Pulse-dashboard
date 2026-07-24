@@ -1,14 +1,23 @@
-import "./style.css";
+// styles imports:
+import "./styles/base.css";
+import "./styles/components.css";
+import "./styles/layout.css";
+import "./styles/system.css";
+import "./styles/weather.css";
+import "./styles/notes.css";
+import "./styles/calendar.css";
+import "./styles/animations.css";
 
+//System imports:
 import { cpuWidget } from "./widgets/cpu";
 import { gpuWidget } from "./widgets/gpu";
 import { ramWidget } from "./widgets/ram";
-
+import { diskWidget } from "./widgets/disk";
+//other imports:
 import { weatherWidget } from "./widgets/weather";
 import { notesWidget } from "./widgets/notes";
 import { calendarWidget } from "./widgets/calendar";
 import { startReminderService } from "./services/reminder-service";
-import { diskWidget } from "./widgets/disk";
 
 const app = document.querySelector<HTMLDivElement>("#app");
 
@@ -118,16 +127,20 @@ Kalendarz
 
     content.innerHTML = `
 
-
 <div class="system-dashboard">
+
 
 ${cpuWidget.render()}
 
+
 ${gpuWidget.render()}
+
 
 ${ramWidget.render()}
 
+
 ${diskWidget.render()}
+
 
 </div>
 

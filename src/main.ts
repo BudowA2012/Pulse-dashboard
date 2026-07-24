@@ -239,5 +239,3 @@ ${calendarWidget.render()}
     }
   }, 2000);
 }
-
-startReminderService();

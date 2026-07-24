@@ -8,6 +8,7 @@ import { weatherWidget } from "./widgets/weather";
 import { notesWidget } from "./widgets/notes";
 import { calendarWidget } from "./widgets/calendar";
 import { startReminderService } from "./services/reminder-service";
+import { diskWidget } from "./widgets/disk";
 
 const app = document.querySelector<HTMLDivElement>("#app");
 
@@ -118,20 +119,17 @@ Kalendarz
     content.innerHTML = `
 
 
-<div class="dashboard">
-
+<div class="system-dashboard">
 
 ${cpuWidget.render()}
 
-
 ${gpuWidget.render()}
-
 
 ${ramWidget.render()}
 
+${diskWidget.render()}
 
 </div>
-
 
 `;
 
@@ -140,6 +138,8 @@ ${ramWidget.render()}
     gpuWidget.update();
 
     ramWidget.update();
+
+    diskWidget.update();
   }
 
   function showWeather() {
@@ -236,6 +236,8 @@ ${calendarWidget.render()}
       gpuWidget.update();
 
       ramWidget.update();
+
+      diskWidget.update();
     }
   }, 2000);
 }

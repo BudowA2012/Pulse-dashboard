@@ -1,10 +1,12 @@
 mod cpu;
 mod gpu;
 mod ram;
+mod disk;
 
 use cpu::*;
 use gpu::*;
 use ram::*;
+use disk::*;
 
 use tauri_plugin_notification;
 
@@ -18,7 +20,8 @@ pub fn run() {
             tauri::generate_handler![
                 get_cpu_usage,
                 get_gpu_usage,
-                get_ram_usage
+                get_ram_usage,
+                get_disks
             ]
         )
         .run(

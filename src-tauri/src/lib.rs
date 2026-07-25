@@ -13,6 +13,7 @@ use disk::*;
 use tauri_plugin_notification;
 
 
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
 
@@ -34,6 +35,8 @@ pub fn run() {
                 get_cpu_info,
 
                 get_gpu_usage,
+
+                get_gpu_info,
 
                 get_ram_usage,
 

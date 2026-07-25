@@ -20,6 +20,10 @@ import { notesWidget } from "./widgets/notes";
 import { calendarWidget } from "./widgets/calendar";
 import { startReminderService } from "./services/reminder-service";
 
+// Views
+import { showCpuDetails } from "./views/cpu-details";
+import { showGpuDetails } from "./views/gpu-details";
+
 const app = document.querySelector<HTMLDivElement>("#app");
 
 if (app) {
@@ -36,17 +40,12 @@ if (app) {
 
 
 <div class="brand-name">
-
 PULSE
-
 </div>
 
 
-
 <div class="brand-sub">
-
 SMART DASHBOARD
-
 </div>
 
 
@@ -58,34 +57,31 @@ SMART DASHBOARD
 <nav class="top-nav">
 
 
-<button id="system-tab" class="active">
-
+<button 
+id="system-tab"
+class="active">
 System
-
 </button>
 
 
 
-<button id="weather-tab">
-
+<button 
+id="weather-tab">
 Pogoda
-
 </button>
 
 
 
-<button id="notes-tab">
-
+<button 
+id="notes-tab">
 Notatki
-
 </button>
 
 
 
-<button id="calendar-tab">
-
+<button 
+id="calendar-tab">
 Kalendarz
-
 </button>
 
 
@@ -120,6 +116,16 @@ Kalendarz
     document.getElementById(id)?.classList.add("active");
   }
 
+  function bindSystemClicks() {
+    document.getElementById("cpu-widget")?.addEventListener("click", () => {
+      showCpuDetails();
+    });
+
+    document.getElementById("gpu-widget")?.addEventListener("click", () => {
+      showGpuDetails();
+    });
+  }
+
   function showSystem() {
     if (!content) return;
 
@@ -150,8 +156,6 @@ ${diskWidget.render()}
 
     gpuWidget.setup();
 
-    ramWidget.setup();
-
     cpuWidget.update();
 
     gpuWidget.update();
@@ -159,6 +163,8 @@ ${diskWidget.render()}
     ramWidget.update();
 
     diskWidget.update();
+
+    bindSystemClicks();
   }
 
   function showWeather() {
@@ -250,14 +256,12 @@ ${calendarWidget.render()}
   startReminderService();
 
   setInterval(() => {
-    if (document.getElementById("cpu-value")) {
-      cpuWidget.update();
-
-      gpuWidget.update();
-
-      ramWidget.update();
-
-      diskWidget.update();
-    }
+    cpuWidget.update();
+    gpuWidget.update();
+    ramWidget.update();
   }, 2000);
+
+  setInterval(() => {
+    diskWidget.update();
+  }, 10000);
 }

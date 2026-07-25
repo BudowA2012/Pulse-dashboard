@@ -14,10 +14,6 @@ interface GpuInfo {
   graphics_clock: number;
 
   memory_clock: number;
-
-  power_usage: number;
-
-  power_limit: number;
 }
 
 export async function showGpuDetails() {
@@ -32,10 +28,9 @@ export async function showGpuDetails() {
 
 
 
-<button
+<button 
 id="back-system"
-class="details-back"
->
+class="details-back">
 
 ← System
 
@@ -76,8 +71,7 @@ Model
 
 <div 
 class="detail-value"
-id="gpu-name"
->
+id="gpu-name">
 
 --
 
@@ -102,8 +96,7 @@ Użycie
 
 <div 
 class="detail-value"
-id="gpu-usage"
->
+id="gpu-usage">
 
 --
 
@@ -128,8 +121,7 @@ Temperatura
 
 <div 
 class="detail-value"
-id="gpu-temp"
->
+id="gpu-temp">
 
 --
 
@@ -147,15 +139,14 @@ id="gpu-temp"
 
 <div class="detail-title">
 
-VRAM
+VRAM użyte
 
 </div>
 
 
 <div 
 class="detail-value"
-id="gpu-memory"
->
+id="gpu-memory-used">
 
 --
 
@@ -173,15 +164,14 @@ id="gpu-memory"
 
 <div class="detail-title">
 
-Taktowanie rdzenia
+VRAM całkowite
 
 </div>
 
 
 <div 
 class="detail-value"
-id="gpu-clock"
->
+id="gpu-memory-total">
 
 --
 
@@ -199,15 +189,14 @@ id="gpu-clock"
 
 <div class="detail-title">
 
-Taktowanie pamięci
+GPU Clock
 
 </div>
 
 
 <div 
 class="detail-value"
-id="gpu-memory-clock"
->
+id="gpu-clock">
 
 --
 
@@ -225,15 +214,14 @@ id="gpu-memory-clock"
 
 <div class="detail-title">
 
-Pobór mocy
+Memory Clock
 
 </div>
 
 
 <div 
 class="detail-value"
-id="gpu-power"
->
+id="gpu-memory-clock">
 
 --
 
@@ -245,36 +233,7 @@ id="gpu-power"
 
 
 
-
-
-<div class="detail-card">
-
-<div class="detail-title">
-
-Limit mocy
-
 </div>
-
-
-<div 
-class="detail-value"
-id="gpu-power-limit"
->
-
---
-
-</div>
-
-</div>
-
-
-
-
-
-
-</div>
-
-
 
 
 </div>
@@ -296,22 +255,17 @@ id="gpu-power-limit"
 
     document.getElementById("gpu-temp")!.textContent = gpu.temperature + " °C";
 
-    document.getElementById("gpu-memory")!.textContent =
-      (gpu.memory_used / 1024 / 1024).toFixed(0) +
-      " MB / " +
-      (gpu.memory_total / 1024 / 1024).toFixed(0) +
-      " MB";
+    document.getElementById("gpu-memory-used")!.textContent =
+      (gpu.memory_used / 1024 / 1024 / 1024).toFixed(1) + " GB";
+
+    document.getElementById("gpu-memory-total")!.textContent =
+      (gpu.memory_total / 1024 / 1024 / 1024).toFixed(1) + " GB";
 
     document.getElementById("gpu-clock")!.textContent =
       gpu.graphics_clock + " MHz";
 
     document.getElementById("gpu-memory-clock")!.textContent =
       gpu.memory_clock + " MHz";
-
-    document.getElementById("gpu-power")!.textContent = gpu.power_usage + " W";
-
-    document.getElementById("gpu-power-limit")!.textContent =
-      gpu.power_limit + " W";
   } catch (error) {
     console.error("GPU info error:", error);
   }

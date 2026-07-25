@@ -47,6 +47,15 @@ export interface CalendarEvent {
 
   createdAt: string;
 }
+export interface SavedWeatherCity {
+  id: string;
+
+  name: string;
+
+  lat: number;
+
+  lon: number;
+}
 
 // =======================
 // STORAGE
@@ -150,10 +159,12 @@ export function removeWeatherCity(id: string) {
   saveStorage(storage);
 }
 
-export function loadWeatherCities() {
+export function loadWeatherCities(): SavedWeatherCity[] {
   const storage = loadStorage();
 
   return storage.weatherCities.map((city) => ({
+    id: city.id,
+
     name: city.name,
 
     lat: city.lat,

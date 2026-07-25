@@ -57,11 +57,7 @@ id="gpu-chart"
   }
 
   setup() {
-    const widget = document.getElementById("gpu-widget");
-
-    if (!widget) return;
-
-    widget.addEventListener("click", () => {
+    document.getElementById("gpu-widget")?.addEventListener("click", () => {
       showGpuDetails();
     });
   }

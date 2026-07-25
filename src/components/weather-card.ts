@@ -37,6 +37,8 @@ function getWeatherName(code: number) {
 export class WeatherCard {
   private id: string;
 
+  private storageId: string = "";
+
   private cityName: string = "";
 
   private temperature: string = "-- °C";
@@ -57,16 +59,21 @@ export class WeatherCard {
     return this.id;
   }
 
+  setStorageId(id: string) {
+    this.storageId = id;
+  }
+
+  getStorageId(): string {
+    return this.storageId;
+  }
+
   render(): string {
     return `
-
 
 <div
 class="weather-card"
 id="${this.id}"
 >
-
-
 
 <button
 class="weather-remove"
@@ -74,20 +81,11 @@ class="weather-remove"
 ×
 </button>
 
-
-
-
-
 <h2 class="weather-city">
 
 ${this.cityName || "Wybierz miasto"}
 
 </h2>
-
-
-
-
-
 
 <div
 class="weather-temp"
@@ -97,16 +95,9 @@ ${this.temperature}
 
 </div>
 
-
-
-
-
-
-
 <div
 class="weather-details"
 >
-
 
 ${
   this.cityName
@@ -120,13 +111,9 @@ ${this.weatherName}
 
 </div>
 
-
-
 <div>
 💨 Wiatr ${this.wind}
 </div>
-
-
 
 <div>
 💧 Wilgotność ${this.humidity}
@@ -136,30 +123,17 @@ ${this.weatherName}
     : ""
 }
 
-
-
 </div>
-
-
-
-
-
-
-
 
 <div
 class="weather-add"
 style="${this.cityName ? "display:none;" : ""}"
 >
 
-
-
 <input
 class="card-city-input"
 placeholder="Wpisz miasto..."
 >
-
-
 
 <div
 class="card-city-results"
@@ -167,16 +141,9 @@ class="card-city-results"
 
 </div>
 
-
-
 </div>
 
-
-
-
-
 </div>
-
 
 `;
   }
@@ -223,18 +190,13 @@ ${this.weatherName}
 
 </div>
 
-
-
 <div>
 💨 Wiatr ${this.wind}
 </div>
 
-
-
 <div>
 💧 Wilgotność ${this.humidity}
 </div>
-
 
 `;
     }

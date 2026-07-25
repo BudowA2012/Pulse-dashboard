@@ -6,7 +6,12 @@ import { WeatherCard } from "../components/weather-card";
 import { searchCity } from "../services/geocoding";
 import { getWeather } from "../services/weather";
 
-import { loadWeatherCities, addWeatherCity } from "../storage";
+import {
+  loadWeatherCities,
+  addWeatherCity,
+  removeWeatherCity,
+  loadStorage,
+} from "../storage";
 
 class WeatherWidget extends Widget {
   private cards: WeatherCard[] = [];
@@ -20,24 +25,18 @@ class WeatherWidget extends Widget {
 
 <div class="weather-widget">
 
-
 <h2>
 ${this.title}
 </h2>
-
-
 
 <div
 class="weather-grid"
 id="weather-grid"
 >
 
-
 ${addWeatherCard.render()}
 
-
 </div>
-
 
 </div>
 
@@ -95,6 +94,12 @@ ${addWeatherCard.render()}
   }
 
   private removeCard(card: WeatherCard) {
+    const storageId = card.getStorageId();
+
+    if (storageId) {
+      removeWeatherCity(storageId);
+    }
+
     this.cards = this.cards.filter((item) => item !== card);
 
     this.renderCards();
@@ -157,11 +162,20 @@ ${city.name}
 
           addWeatherCity({
             name: city.name,
-
             lat: city.lat,
-
             lon: city.lon,
           });
+
+          const storage = loadStorage();
+
+          const saved = storage.weatherCities.find(
+            (c) =>
+              c.name === city.name && c.lat === city.lat && c.lon === city.lon,
+          );
+
+          if (saved) {
+            card.setStorageId(saved.id);
+          }
         });
       });
     });
@@ -172,10 +186,12 @@ ${city.name}
 
     if (cities.length === 0) return;
 
-    for (const _city of cities) {
+    for (const city of cities) {
       const id = "weather-" + Date.now() + Math.random();
 
       const card = new WeatherCard(id);
+
+      card.setStorageId(city.id);
 
       this.cards.push(card);
     }

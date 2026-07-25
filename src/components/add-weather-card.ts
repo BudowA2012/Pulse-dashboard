@@ -18,4 +18,18 @@ export class AddWeatherCard {
   }
 }
 
-export const addWeatherCard = new AddWeatherCard();
+export const addWeatherCard = {
+  render() {
+    return `
+
+<div class="weather-card add-weather-card">
+
+<h3>
+Dodaj miasto
+</h3>
+
+</div>
+
+`;
+  },
+};

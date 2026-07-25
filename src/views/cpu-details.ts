@@ -26,7 +26,10 @@ export async function showCpuDetails() {
 
 
 
-<button id="back-system" class="details-back">
+<button
+id="back-system"
+class="details-back"
+>
 
 ← System
 
@@ -38,13 +41,9 @@ export async function showCpuDetails() {
 <div class="widget cpu-details-widget">
 
 
-
 <h2>
-
 🖥 CPU Details
-
 </h2>
-
 
 
 
@@ -52,26 +51,20 @@ export async function showCpuDetails() {
 
 
 
-
-
 <div class="detail-card">
 
 <div class="detail-title">
-
 Model
-
 </div>
 
-
-<div class="detail-value" id="cpu-name">
-
+<div 
+class="detail-value"
+id="cpu-name"
+>
 --
-
 </div>
 
 </div>
-
-
 
 
 
@@ -80,21 +73,17 @@ Model
 <div class="detail-card">
 
 <div class="detail-title">
-
 Użycie
-
 </div>
 
-
-<div class="detail-value" id="cpu-usage">
-
+<div 
+class="detail-value"
+id="cpu-usage"
+>
 --
-
 </div>
 
 </div>
-
-
 
 
 
@@ -103,21 +92,17 @@ Użycie
 <div class="detail-card">
 
 <div class="detail-title">
-
 Rdzenie fizyczne
-
 </div>
 
-
-<div class="detail-value" id="cpu-cores">
-
+<div 
+class="detail-value"
+id="cpu-cores"
+>
 --
-
 </div>
 
 </div>
-
-
 
 
 
@@ -126,21 +111,17 @@ Rdzenie fizyczne
 <div class="detail-card">
 
 <div class="detail-title">
-
 Wątki logiczne
-
 </div>
 
-
-<div class="detail-value" id="cpu-threads">
-
+<div 
+class="detail-value"
+id="cpu-threads"
+>
 --
-
 </div>
 
 </div>
-
-
 
 
 
@@ -149,21 +130,17 @@ Wątki logiczne
 <div class="detail-card">
 
 <div class="detail-title">
-
-Aktualne taktowanie
-
+Taktowanie
 </div>
 
-
-<div class="detail-value" id="cpu-frequency">
-
+<div 
+class="detail-value"
+id="cpu-frequency"
+>
 --
-
 </div>
 
 </div>
-
-
 
 
 
@@ -172,22 +149,17 @@ Aktualne taktowanie
 <div class="detail-card">
 
 <div class="detail-title">
-
 Średnie taktowanie
-
 </div>
 
-
-<div class="detail-value" id="cpu-average-frequency">
-
+<div 
+class="detail-value"
+id="cpu-average-frequency"
+>
 --
-
 </div>
 
 </div>
-
-
-
 
 
 
@@ -196,7 +168,6 @@ Aktualne taktowanie
 
 
 </div>
-
 
 
 
@@ -229,8 +200,6 @@ Aktualne taktowanie
   }
 
   document.getElementById("back-system")?.addEventListener("click", () => {
-    // wracamy do systemu
-
     location.reload();
   });
 }

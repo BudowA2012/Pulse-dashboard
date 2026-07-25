@@ -23,9 +23,7 @@ id="cpu-widget"
 
 
 <h2>
-
 ${this.title}
-
 </h2>
 
 
@@ -34,9 +32,7 @@ ${this.title}
 class="value"
 id="cpu-value"
 >
-
 --
-
 </div>
 
 
@@ -45,7 +41,6 @@ id="cpu-value"
 class="chart"
 id="cpu-chart"
 >
-
 </div>
 
 

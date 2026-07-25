@@ -14,9 +14,6 @@ import { gpuWidget } from "./widgets/gpu";
 import { ramWidget } from "./widgets/ram";
 import { diskWidget } from "./widgets/disk";
 
-// Views
-import { showCpuDetails } from "./views/cpu-details";
-
 // Other imports:
 import { weatherWidget } from "./widgets/weather";
 import { notesWidget } from "./widgets/notes";
@@ -101,6 +98,7 @@ Kalendarz
 
 
 
+
 <main id="content">
 
 </main>
@@ -120,12 +118,6 @@ Kalendarz
     });
 
     document.getElementById(id)?.classList.add("active");
-  }
-
-  function bindSystemClicks() {
-    document.getElementById("cpu-widget")?.addEventListener("click", () => {
-      showCpuDetails();
-    });
   }
 
   function showSystem() {
@@ -154,6 +146,12 @@ ${diskWidget.render()}
 
 `;
 
+    cpuWidget.setup();
+
+    gpuWidget.setup();
+
+    ramWidget.setup();
+
     cpuWidget.update();
 
     gpuWidget.update();
@@ -161,8 +159,6 @@ ${diskWidget.render()}
     ramWidget.update();
 
     diskWidget.update();
-
-    bindSystemClicks();
   }
 
   function showWeather() {

@@ -12,7 +12,7 @@ class GpuWidget extends Widget {
     this.chart = new Chart("gpu-chart");
   }
 
-  render() {
+  render(): string {
     return `
 
 
@@ -57,7 +57,11 @@ id="gpu-chart"
   }
 
   setup() {
-    document.getElementById("gpu-widget")?.addEventListener("click", () => {
+    const widget = document.getElementById("gpu-widget");
+
+    if (!widget) return;
+
+    widget.addEventListener("click", () => {
       showGpuDetails();
     });
   }

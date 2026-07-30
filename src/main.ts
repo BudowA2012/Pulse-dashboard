@@ -1,4 +1,3 @@
-// styles imports:
 import "./styles/base.css";
 import "./styles/components.css";
 import "./styles/layout.css";
@@ -8,27 +7,26 @@ import "./styles/notes.css";
 import "./styles/calendar.css";
 import "./styles/animations.css";
 
-// System imports:
 import { cpuWidget } from "./widgets/cpu";
 import { gpuWidget } from "./widgets/gpu";
 import { ramWidget } from "./widgets/ram";
 import { diskWidget } from "./widgets/disk";
 
-// Other imports:
 import { weatherWidget } from "./widgets/weather";
 import { notesWidget } from "./widgets/notes";
 import { calendarWidget } from "./widgets/calendar";
-import { startReminderService } from "./services/reminder-service";
 
-// Views
-import { showCpuDetails } from "./views/cpu-details";
-import { showGpuDetails } from "./views/gpu-details";
+import { startReminderService } from "./services/reminder-service";
 
 const app = document.querySelector<HTMLDivElement>("#app");
 
+let systemInterval: number | null = null;
+let diskInterval: number | null = null;
+
+let updating = false;
+
 if (app) {
   app.innerHTML = `
-
 
 <div class="app">
 
@@ -37,7 +35,6 @@ if (app) {
 
 
 <div class="brand">
-
 
 <div class="brand-name">
 PULSE
@@ -53,37 +50,27 @@ SMART DASHBOARD
 
 
 
-
 <nav class="top-nav">
 
 
-<button 
-id="system-tab"
-class="active">
+<button id="system-tab" class="active">
 System
 </button>
 
 
-
-<button 
-id="weather-tab">
+<button id="weather-tab">
 Pogoda
 </button>
 
 
-
-<button 
-id="notes-tab">
+<button id="notes-tab">
 Notatki
 </button>
 
 
-
-<button 
-id="calendar-tab">
+<button id="calendar-tab">
 Kalendarz
 </button>
-
 
 
 </nav>
@@ -93,44 +80,83 @@ Kalendarz
 
 
 
-
-
 <main id="content">
 
 </main>
 
 
-
 </div>
-
 
 `;
 
   const content = document.getElementById("content");
 
   function setActiveTab(id: string) {
-    document.querySelectorAll(".top-nav button").forEach((button) => {
-      button.classList.remove("active");
+    document.querySelectorAll(".top-nav button").forEach((btn) => {
+      btn.classList.remove("active");
     });
 
     document.getElementById(id)?.classList.add("active");
   }
 
-  function bindSystemClicks() {
-    document.getElementById("cpu-widget")?.addEventListener("click", () => {
-      showCpuDetails();
-    });
+  function stopSystemUpdates() {
+    if (systemInterval) {
+      clearInterval(systemInterval);
 
-    document.getElementById("gpu-widget")?.addEventListener("click", () => {
-      showGpuDetails();
-    });
+      systemInterval = null;
+    }
+
+    if (diskInterval) {
+      clearInterval(diskInterval);
+
+      diskInterval = null;
+    }
   }
 
-  function showSystem() {
+  async function updateSystem() {
+    if (updating) return;
+
+    if (!document.getElementById("cpu-value")) {
+      return;
+    }
+
+    updating = true;
+
+    try {
+      await Promise.all([
+        cpuWidget.update(),
+
+        gpuWidget.update(),
+
+        ramWidget.update(),
+      ]);
+    } catch (error) {
+      console.error("System update error:", error);
+    }
+
+    updating = false;
+  }
+
+  function startSystemUpdates() {
+    stopSystemUpdates();
+
+    systemInterval = window.setInterval(() => {
+      updateSystem();
+    }, 3000);
+
+    diskInterval = window.setInterval(() => {
+      if (document.getElementById("disk-value")) {
+        diskWidget.update();
+      }
+    }, 15000);
+  }
+
+  async function showSystem() {
     if (!content) return;
 
-    content.innerHTML = `
+    stopSystemUpdates();
 
+    content.innerHTML = `
 
 <div class="system-dashboard">
 
@@ -149,58 +175,53 @@ ${diskWidget.render()}
 
 </div>
 
-
 `;
 
     cpuWidget.setup();
 
     gpuWidget.setup();
 
-    cpuWidget.update();
+    ramWidget.setup();
 
-    gpuWidget.update();
+    diskWidget.setup();
 
-    ramWidget.update();
+    await updateSystem();
 
-    diskWidget.update();
+    await diskWidget.update();
 
-    bindSystemClicks();
+    startSystemUpdates();
   }
 
-  function showWeather() {
+  async function showWeather() {
+    stopSystemUpdates();
+
     if (!content) return;
 
     content.innerHTML = `
-
 
 <div class="weather-page">
 
-
 ${weatherWidget.render()}
-
 
 </div>
 
-
 `;
 
-    weatherWidget.setup();
+    await weatherWidget.setup();
   }
 
   function showNotes() {
+    stopSystemUpdates();
+
     if (!content) return;
 
     content.innerHTML = `
 
-
 <div class="notes-page">
-
 
 ${notesWidget.render()}
 
-
 </div>
-
 
 `;
 
@@ -208,19 +229,17 @@ ${notesWidget.render()}
   }
 
   function showCalendar() {
+    stopSystemUpdates();
+
     if (!content) return;
 
     content.innerHTML = `
 
-
 <div class="calendar-page">
-
 
 ${calendarWidget.render()}
 
-
 </div>
-
 
 `;
 
@@ -251,17 +270,13 @@ ${calendarWidget.render()}
     setActiveTab("calendar-tab");
   });
 
+  window.addEventListener("show-system", () => {
+    showSystem();
+
+    setActiveTab("system-tab");
+  });
+
   showSystem();
 
   startReminderService();
-
-  setInterval(() => {
-    cpuWidget.update();
-    gpuWidget.update();
-    ramWidget.update();
-  }, 2000);
-
-  setInterval(() => {
-    diskWidget.update();
-  }, 10000);
 }

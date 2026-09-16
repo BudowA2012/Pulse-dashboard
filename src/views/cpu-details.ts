@@ -2,15 +2,10 @@ import { invoke } from "@tauri-apps/api/core";
 
 interface CpuInfo {
   usage: number;
-
   name: string;
-
   physical_cores: number;
-
   logical_threads: number;
-
   frequency: number;
-
   average_frequency: number;
 }
 
@@ -21,121 +16,125 @@ export async function showCpuDetails() {
 
   if (!content) return;
 
+  // Gdyby widok został otwarty drugi raz, nie tworzymy kolejnego timera.
+  if (cpuInterval) {
+    clearInterval(cpuInterval);
+    cpuInterval = undefined;
+  }
+
   content.innerHTML = `
+    <div class="details-page">
 
+      <button
+        id="back-system"
+        class="details-back"
+      >
+        <span class="details-back-arrow">←</span>
+        System
+      </button>
 
-<div class="details-page">
+      <div class="widget cpu-details-widget">
 
+        <h2>🖥 CPU Details</h2>
 
-<button
-id="back-system"
-class="details-back"
->
-← System
-</button>
+        <div class="details-grid">
 
+          <div class="detail-card">
+            <div class="detail-title">Model</div>
+            <div class="detail-value" id="cpu-name">--</div>
+          </div>
 
+          <div class="detail-card">
+            <div class="detail-title">Użycie</div>
+            <div class="detail-value" id="cpu-usage">--</div>
+          </div>
 
-<div class="widget cpu-details-widget">
+          <div class="detail-card">
+            <div class="detail-title">Rdzenie fizyczne</div>
+            <div class="detail-value" id="cpu-cores">--</div>
+          </div>
 
+          <div class="detail-card">
+            <div class="detail-title">Wątki logiczne</div>
+            <div class="detail-value" id="cpu-threads">--</div>
+          </div>
 
-<h2>
-🖥 CPU Details
-</h2>
+          <div class="detail-card">
+            <div class="detail-title">Taktowanie</div>
+            <div class="detail-value" id="cpu-frequency">--</div>
+          </div>
 
+          <div class="detail-card">
+            <div class="detail-title">Średnie taktowanie</div>
+            <div class="detail-value" id="cpu-average-frequency">--</div>
+          </div>
 
+        </div>
 
-<div class="details-grid">
+      </div>
 
-
-
-<div class="detail-card">
-<div class="detail-title">Model</div>
-<div class="detail-value" id="cpu-name">--</div>
-</div>
-
-
-
-<div class="detail-card">
-<div class="detail-title">Użycie</div>
-<div class="detail-value" id="cpu-usage">--</div>
-</div>
-
-
-
-<div class="detail-card">
-<div class="detail-title">Rdzenie fizyczne</div>
-<div class="detail-value" id="cpu-cores">--</div>
-</div>
-
-
-
-<div class="detail-card">
-<div class="detail-title">Wątki logiczne</div>
-<div class="detail-value" id="cpu-threads">--</div>
-</div>
-
-
-
-<div class="detail-card">
-<div class="detail-title">Taktowanie</div>
-<div class="detail-value" id="cpu-frequency">--</div>
-</div>
-
-
-
-<div class="detail-card">
-<div class="detail-title">Średnie taktowanie</div>
-<div class="detail-value" id="cpu-average-frequency">--</div>
-</div>
-
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-`;
+    </div>
+  `;
 
   async function updateCpu() {
     try {
       const cpu = await invoke<CpuInfo>("get_cpu_info");
 
-      document.getElementById("cpu-name")!.textContent = cpu.name;
+      const name = document.getElementById("cpu-name");
+      const usage = document.getElementById("cpu-usage");
+      const cores = document.getElementById("cpu-cores");
+      const threads = document.getElementById("cpu-threads");
+      const frequency = document.getElementById("cpu-frequency");
+      const averageFrequency = document.getElementById(
+        "cpu-average-frequency"
+      );
 
-      document.getElementById("cpu-usage")!.textContent =
-        cpu.usage.toFixed(1) + " %";
+      // Jeśli użytkownik zdążył wyjść ze szczegółów,
+      // po prostu kończymy aktualizację.
+      if (!name) return;
 
-      document.getElementById("cpu-cores")!.textContent =
-        cpu.physical_cores.toString();
+      name.textContent = cpu.name;
 
-      document.getElementById("cpu-threads")!.textContent =
-        cpu.logical_threads.toString();
+      if (usage) {
+        usage.textContent = cpu.usage.toFixed(1) + " %";
+      }
 
-      document.getElementById("cpu-frequency")!.textContent =
-        (cpu.frequency / 1000).toFixed(2) + " GHz";
+      if (cores) {
+        cores.textContent = cpu.physical_cores.toString();
+      }
 
-      document.getElementById("cpu-average-frequency")!.textContent =
-        (cpu.average_frequency / 1000).toFixed(2) + " GHz";
+      if (threads) {
+        threads.textContent = cpu.logical_threads.toString();
+      }
+
+      if (frequency) {
+        frequency.textContent =
+          (cpu.frequency / 1000).toFixed(2) + " GHz";
+      }
+
+      if (averageFrequency) {
+        averageFrequency.textContent =
+          (cpu.average_frequency / 1000).toFixed(2) + " GHz";
+      }
     } catch (error) {
       console.error("CPU update error:", error);
     }
   }
 
-  updateCpu();
+  // Dane od razu.
+  await updateCpu();
 
+  // I kolejne aktualizacje.
   cpuInterval = window.setInterval(updateCpu, 1000);
 
-  document.getElementById("back-system")?.addEventListener("click", () => {
-    if (cpuInterval) {
-      clearInterval(cpuInterval);
-    }
+  document
+    .getElementById("back-system")
+    ?.addEventListener("click", () => {
+      if (cpuInterval) {
+        clearInterval(cpuInterval);
+        cpuInterval = undefined;
+      }
 
-    location.reload();
-  });
+      location.reload();
+    });
 }

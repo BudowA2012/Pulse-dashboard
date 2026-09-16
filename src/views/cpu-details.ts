@@ -16,7 +16,6 @@ export async function showCpuDetails() {
 
   if (!content) return;
 
-  // Gdyby widok został otwarty drugi raz, nie tworzymy kolejnego timera.
   if (cpuInterval) {
     clearInterval(cpuInterval);
     cpuInterval = undefined;
@@ -35,7 +34,7 @@ export async function showCpuDetails() {
 
       <div class="widget cpu-details-widget">
 
-        <h2>🖥 CPU Details</h2>
+        <h2>CPU Details</h2>
 
         <div class="details-grid">
 
@@ -89,8 +88,6 @@ export async function showCpuDetails() {
         "cpu-average-frequency"
       );
 
-      // Jeśli użytkownik zdążył wyjść ze szczegółów,
-      // po prostu kończymy aktualizację.
       if (!name) return;
 
       name.textContent = cpu.name;
@@ -121,10 +118,8 @@ export async function showCpuDetails() {
     }
   }
 
-  // Dane od razu.
   await updateCpu();
 
-  // I kolejne aktualizacje.
   cpuInterval = window.setInterval(updateCpu, 1000);
 
   document

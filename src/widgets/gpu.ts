@@ -1,59 +1,44 @@
 import { invoke } from "@tauri-apps/api/core";
+
 import { Widget } from "./widget";
+
 import { Chart } from "../services/charts";
+
 import { showGpuDetails } from "../views/gpu-details";
 
 class GpuWidget extends Widget {
   private chart: Chart;
 
   constructor() {
-    super("gpu", "🎮 GPU");
+    super("gpu", "GPU");
 
     this.chart = new Chart("gpu-chart");
   }
 
   render(): string {
     return `
+      <div
+        class="widget system-clickable"
+        id="gpu-widget"
+      >
+        <h2>
+          ${this.title}
+        </h2>
 
+        <div
+          class="value"
+          id="gpu-value"
+        >
+          --
+        </div>
 
-<div 
-class="widget system-clickable"
-id="gpu-widget"
->
-
-
-<h2>
-
-${this.title}
-
-</h2>
-
-
-
-<div
-class="value"
-id="gpu-value"
->
-
---
-
-</div>
-
-
-
-<div
-class="chart"
-id="gpu-chart"
->
-
-</div>
-
-
-
-</div>
-
-
-`;
+        <div
+          class="chart"
+          id="gpu-chart"
+        >
+        </div>
+      </div>
+    `;
   }
 
   setup() {

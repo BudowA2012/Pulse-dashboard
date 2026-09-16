@@ -36,7 +36,7 @@ export async function showRamDetails() {
 
       <div class="widget ram-details-widget">
 
-        <h2>💾 RAM Details</h2>
+        <h2>RAM Details</h2>
 
         <div class="details-grid">
 
@@ -124,13 +124,10 @@ export async function showRamDetails() {
     }
   }
 
-  // Dane live od razu
   await updateRam();
 
-  // Clock tylko raz
   loadRamClock();
 
-  // RAM live co sekundę
   ramInterval = window.setInterval(
     updateRam,
     1000

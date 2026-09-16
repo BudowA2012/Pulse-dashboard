@@ -35,7 +35,7 @@ export async function showGpuDetails() {
 
       <div class="widget gpu-details-widget">
 
-        <h2>🎮 GPU Details</h2>
+        <h2>GPU Details</h2>
 
         <div class="details-grid">
 

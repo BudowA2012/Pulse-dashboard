@@ -2,11 +2,13 @@ mod cpu;
 mod gpu;
 mod ram;
 mod disk;
+mod system_info;
 
 use cpu::*;
 use gpu::*;
 use ram::*;
 use disk::*;
+use system_info::*;
 
 use tauri_plugin_notification;
 
@@ -27,7 +29,8 @@ pub fn run() {
                 get_ram_usage,
                 get_ram_info,
                 get_ram_clock,
-                get_disks
+                get_disks,
+                get_system_info
             ]
         )
 

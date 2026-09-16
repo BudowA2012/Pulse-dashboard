@@ -1,59 +1,44 @@
 import { invoke } from "@tauri-apps/api/core";
+
 import { Widget } from "./widget";
+
 import { Chart } from "../services/charts";
+
 import { showRamDetails } from "../views/ram-details";
 
 class RamWidget extends Widget {
   private chart: Chart;
 
   constructor() {
-    super("ram", "💾 RAM");
+    super("ram", "RAM");
 
     this.chart = new Chart("ram-chart");
   }
 
   render() {
     return `
+      <div
+        class="widget system-clickable"
+        id="ram-widget"
+      >
+        <h2>
+          ${this.title}
+        </h2>
 
+        <div
+          class="value"
+          id="ram-value"
+        >
+          --
+        </div>
 
-<div
-class="widget system-clickable"
-id="ram-widget"
->
-
-
-<h2>
-
-${this.title}
-
-</h2>
-
-
-
-<div
-class="value"
-id="ram-value"
->
-
---
-
-</div>
-
-
-
-<div
-class="chart"
-id="ram-chart"
->
-
-</div>
-
-
-
-</div>
-
-
-`;
+        <div
+          class="chart"
+          id="ram-chart"
+        >
+        </div>
+      </div>
+    `;
   }
 
   setup() {

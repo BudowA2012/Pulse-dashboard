@@ -211,3 +211,66 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* SYSTEM INFO */
+
+.system-info-widget {
+  min-height: 180px;
+}
+
+
+.system-info-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  margin-top: 24px;
+}
+
+
+.system-info-row {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 20px;
+
+  padding-bottom: 10px;
+
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.07);
+}
+
+
+.system-info-row:last-child {
+  padding-bottom: 0;
+
+  border-bottom: none;
+}
+
+
+.system-info-row span {
+  color: #8994aa;
+
+  font-size: 13px;
+}
+
+
+.system-info-row strong {
+  color: #dbe7ff;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  text-align: right;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
